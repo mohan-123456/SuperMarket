@@ -25,7 +25,6 @@ public class ProductTest {
 	@Test
 	public void testProductCrudOperations() {
 		
-	
 	Response createResponse = RestAssured.given()
 			.contentType(ContentType.JSON)
 			.body("{\"id\":2,\"name\":\"Mobile\",\"category\":\"Electronics\",\"price\":25000.0,\"quantity\":15}")
@@ -38,19 +37,18 @@ public class ProductTest {
 	
 	Long productId = createResponse.jsonPath().getLong("id");
 	System.out.println(" Created Product ID: " + productId);
-	
-	
-	
-	
+		
 			given()
 				.pathParam("id", productId)
 			.when()
 			   .get("/{id}")
 			.then()
 			    .statusCode(200)
-			    .body("id", equalTo(productId.intValue()));
-	
-	
+			    .body("id", equalTo(productId.intValue()))
+				.body("name", equalTo("Mobile"))
+        		.body("category", equalTo("Electronics"))
+        		.body("price", equalTo(25000.0f))
+        		.body("quantity", equalTo(15));	
 	
 //			when()
 //				.get()
@@ -90,7 +88,11 @@ System.out.println("updateresponse : " +updateResponse);
 						.get("/{id}")
 						.then()
 						.statusCode(200)
-						.body("id", equalTo(updateProductId.intValue()));
+						.body("id", equalTo(updateProductId.intValue()))
+						.body("name" , equalTo("Laptop Pro"))
+						.body("category" , equalTo("Electronics"))
+						.body("price" , equalTo(85000.0))
+						.body("quantity" , equalTo(12));
 			 
 			 
 			 when()
@@ -123,3 +125,4 @@ System.out.println("updateresponse : " +updateResponse);
 			
 
 }
+
