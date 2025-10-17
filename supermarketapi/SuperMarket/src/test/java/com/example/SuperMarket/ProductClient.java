@@ -41,9 +41,12 @@ public class ProductClient {
                 .put("/{id}");
         System.out.println("PUT RESPONSE : " + putResponse.asString());
         
+        Long updatedProductId = putResponse.jsonPath().getLong("id");
+        System.out.println("UPDATED PRODUCT ID : " +updatedProductId);
+        
         
         Response getUpdatedResponse = RestAssured.given()
-				.pathParam("id", productId)
+				.pathParam("id", updatedProductId)
 				.get("/{id}");
 		System.out.println("GET UPDATED RESPONSE : " +getUpdatedResponse.asString());
 		
@@ -57,15 +60,23 @@ public class ProductClient {
 				.delete("/{id}");
 		System.out.println("DELETE BY ID RESPONSE : " +deleteByIdResponse.asString());
 		
+		Response deleteUpdateResponse = RestAssured.given()
+				.pathParam("id", updatedProductId)
+				.delete("/{id}");
+		System.out.println("DELETE BY UPDATE PRODUCT ID RESPONSE : " +deleteByIdResponse.asString());
+		
 		
 		 Response verifyDeletedResponse = RestAssured.given()
 	                .pathParam("id", productId)
 	                .get("/{id}");
-
-	        System.out.println("VERIFY DELETED PRODUCT RESPONSE : " + verifyDeletedResponse.getStatusCode());
+		 System.out.println("VERIFY DELETED PRODUCT RESPONSE : " + verifyDeletedResponse.getStatusCode());
+		 
+		 Response verifyDeletedUpadtedResponse = RestAssured.given()
+	                .pathParam("id", updatedProductId)
+	                .get("/{id}");
+		 System.out.println("VERIFY DELETED UPDATED PRODUCT RESPONSE : " + verifyDeletedUpadtedResponse.getStatusCode());
 	        
-	        
-	        
+	         
 	        Response getAllAfterDelete = RestAssured.get();
 	        System.out.println("GET ALL AFTER DELETE RESPONSE : " + getAllAfterDelete.asString());
 
@@ -74,6 +85,7 @@ public class ProductClient {
 
 
 }
+
 
 
 
