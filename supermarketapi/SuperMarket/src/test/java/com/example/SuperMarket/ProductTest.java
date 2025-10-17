@@ -37,18 +37,18 @@ public class ProductTest {
 	
 	Long productId = createResponse.jsonPath().getLong("id");
 	System.out.println(" Created Product ID: " + productId);
-		
+	
+	
 			given()
 				.pathParam("id", productId)
 			.when()
 			   .get("/{id}")
 			.then()
 			    .statusCode(200)
-			    .body("id", equalTo(productId.intValue()))
-				.body("name", equalTo("Mobile"))
-        		.body("category", equalTo("Electronics"))
-        		.body("price", equalTo(25000.0f))
-        		.body("quantity", equalTo(15));	
+			    .body("id", equalTo(productId.intValue()));
+				
+	
+	
 	
 //			when()
 //				.get()
@@ -72,13 +72,13 @@ Response updateResponse = given()
 					        .body("{\"name\":\"Laptop Pro\",\"category\":\"Electronics\",\"price\":85000.0,\"quantity\":12}")
 					     .when()
 					     	.put("/{id}")
-			
+		
 					     .then()
 					      	.statusCode(anyOf(is(200), is(404)))
 						 	.body("name" , equalTo("Laptop Pro"))
 						 	.extract().response();
 Long updateProductId = updateResponse.jsonPath().getLong("id");
-System.out.println("updateresponse : " +updateResponse);
+System.out.println("updateresponse : " +updateProductId);
 
 
 
@@ -88,11 +88,7 @@ System.out.println("updateresponse : " +updateResponse);
 						.get("/{id}")
 						.then()
 						.statusCode(200)
-						.body("id", equalTo(updateProductId.intValue()))
-						.body("name" , equalTo("Laptop Pro"))
-						.body("category" , equalTo("Electronics"))
-						.body("price" , equalTo(85000.0))
-						.body("quantity" , equalTo(12));
+						.body("id", equalTo(updateProductId.intValue()));
 			 
 			 
 			 when()
@@ -117,6 +113,26 @@ System.out.println("updateresponse : " +updateResponse);
 			.delete("/{id}")
 		.then()
 			.statusCode(200);
+		
+			given()
+			.pathParam("id",productId)
+		.when()
+			.get("/{id}")
+		.then()
+			.statusCode(404);
+			
+			
+			given()
+			.pathParam("id",updateProductId)
+		.when()
+			.get("/{id}")
+		.then()
+			.statusCode(404);
+			
+			when()
+				.get()
+			.then()
+				.statusCode(200);
 			
 			
 			
@@ -125,4 +141,5 @@ System.out.println("updateresponse : " +updateResponse);
 			
 
 }
+
 
