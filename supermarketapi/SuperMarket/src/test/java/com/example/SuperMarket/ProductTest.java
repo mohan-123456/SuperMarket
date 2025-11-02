@@ -50,20 +50,7 @@ public class ProductTest {
 	
 	
 	
-//			when()
-//				.get()
-//			.then()
-//				.statusCode(200)
-//				.body("size",greaterThan(0));
-			
-			
-//			given()
-//				.pathParam("id", productId)
-//			.when()
-//	           .get("/{id}")
-//	        .then()
-//	            .statusCode(200)
-//	            .body("id", equalTo(productId.intValue()));
+
 			
 			
 Response updateResponse = given()
@@ -141,5 +128,6 @@ System.out.println("updateresponse : " +updateProductId);
 			
 
 }
+
 
 
